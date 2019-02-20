@@ -1,0 +1,28 @@
+version: '3'
+services:
+  bitwarden:
+    env_file: .env
+    image: mprasil/bitwarden
+    restart: always
+    container_name: bitwarden
+    volumes: 
+      - ~/bw-data:/data
+      - /tmp/ssl:/ssl/
+    ports: 
+      - 80:80
+
+  backup: 
+    image: bruceforce/bw_backup
+    container_name: bitwarden_backup
+    restart: always
+    volumes:
+      - ~/bw-data:/data
+    environment:
+      CRON_TIME: "0 * * * *"
+
+  certbot:
+    image: certbot/certbot
+
+      
+      
+    
