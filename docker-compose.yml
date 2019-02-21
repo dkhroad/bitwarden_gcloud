@@ -1,22 +1,22 @@
 version: '3'
 services:
   bitwarden:
-    env_file: .env
+    env_file: bitwarden.env
     image: mprasil/bitwarden
     restart: always
     container_name: bitwarden
     volumes: 
-      - ~/bw-data:/data
-      - /tmp/ssl:/ssl/
+      - $HOST_BW_DATA_PATH:/data
+      - $HOST_SSL_PATH:/ssl/
     ports: 
-      - 80:80
+      - $HOST_PORT:80
 
   backup: 
     image: bruceforce/bw_backup
     container_name: bitwarden_backup
     restart: always
     volumes:
-      - ~/bw-data:/data
+      - $HOST_BW_DATA_PATH:/data
     environment:
       CRON_TIME: "0 * * * *"
 
