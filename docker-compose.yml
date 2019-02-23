@@ -1,7 +1,7 @@
 version: '3'
 services:
   bitwarden:
-    env_file: bitwarden.env
+    env_file: $BITWARDEN_ENV_FILE
     image: mprasil/bitwarden
     restart: always
     container_name: bitwarden
@@ -19,6 +19,24 @@ services:
       - $HOST_BW_DATA_PATH:/data
     environment:
       CRON_TIME: "0 * * * *"
+
+
+  backup_gcs:
+    env_file: bitwarden_backup_gcs.env
+    image: dkhroad/bitwarden_backup_gcs
+    container_name: bitwarden_backup_gcs
+    restart: always
+    volumes:
+      - $HOST_BW_DATA_PATH:/data
+
+
+  # nginx:
+  #   image: nginx:mainline-alpine
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     $NGNIX_DATA_PATH:/etc/nginx/conf.d
 
   certbot:
     image: certbot/certbot
