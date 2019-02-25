@@ -23,7 +23,7 @@ services:
 
   backup_gcs:
     env_file: bitwarden_backup_gcs.env
-    image: dkhroad/bitwarden_backup_gcs
+    image: dkhroad/bw_backup
     container_name: bitwarden_backup_gcs
     restart: always
     volumes:
