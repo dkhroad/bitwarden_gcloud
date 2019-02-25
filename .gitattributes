@@ -1,0 +1,1 @@
+bitwarden*.env filter=git-crypt diff=git-crypt
