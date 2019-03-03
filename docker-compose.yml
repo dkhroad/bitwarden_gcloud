@@ -1,45 +1,67 @@
 version: '3'
 services:
   bitwarden:
-    env_file: $BITWARDEN_ENV_FILE
+    env_file: bitwarden.env
     image: mprasil/bitwarden
-    restart: always
+    restart: unless-stopped
     container_name: bitwarden
+    environment:
+      - DOMAIN=$DOMAIN
     volumes: 
-      - $HOST_BW_DATA_PATH:/data
-      - $HOST_SSL_PATH:/ssl/
-    ports: 
-      - $HOST_PORT:80
+      - $HOST_BW_DATA_DIR:/data
 
   backup: 
     image: bruceforce/bw_backup
     container_name: bitwarden_backup
-    restart: always
+    restart: unless-stopped
     volumes:
-      - $HOST_BW_DATA_PATH:/data
+      - $HOST_BW_DATA_DIR:/data
     environment:
       CRON_TIME: "0 * * * *"
 
 
   backup_gcs:
-    env_file: bitwarden_backup_gcs.env
     image: dkhroad/bw_backup
     container_name: bitwarden_backup_gcs
-    restart: always
+    restart: unless-stopped
+    environment:
+      - GS_AUTH2_REFRESH_TOKEN=$GS_AUTH2_REFRESH_TOKEN
+      - PROJECT_ID=$PROJECT_ID
+
     volumes:
-      - $HOST_BW_DATA_PATH:/data
+      - $HOST_BW_DATA_DIR:/data
 
-
-  # nginx:
-  #   image: nginx:mainline-alpine
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     $NGNIX_DATA_PATH:/etc/nginx/conf.d
+  nginx:
+    image: nginx:mainline-alpine
+    container_name: bw_nginx
+    #depends_on: 
+    #  - certbot
+    ports:
+      - "$HOST_HTTP_PORT:80"
+      - "$HOST_HTTPS_PORT:443"
+    restart: unless-stopped
+    volumes:
+      - $NGINX_CONF_DIR:/etc/nginx/conf.d
+      - $CERTBOT_DIR/conf:/etc/letsencrypt
+      - $CERTBOT_DIR/www:/var/www/certbot
+    command: "/bin/sh -c 'envsubst < /etc/nginx/conf.d/app.conf.tmpl > /etc/nginx/conf.d/app.conf && exec nginx -g \"daemon off;\" && \
+              while :; do sleep 6h & wait $${i}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    environment:
+      - ESC=$$
+      - SERVER_FQDN=$DOMAIN
 
   certbot:
-    image: certbot/certbot
+    image: dkhroad/certbot
+    container_name: bw_certbot
+    restart: unless-stopped
+    environment:
+      - CERTBOT_EMAIL=$CERTBOT_EMAIL
+      - DOMAIN=$DOMAIN
+      - STAGING=$STAGING
+    volumes:
+      - $CERTBOT_DIR/conf:/etc/letsencrypt
+      - $CERTBOT_DIR/www:/var/www/certbot
+
 
       
       

@@ -31,4 +31,9 @@ docker run --rm  \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v "$PWD:/rootfs/$PWD" \
     -w="/rootfs/$PWD"  docker/compose:$DOCKER_COMPOSE_VERSION up )
-    
+
+#docker-compose run --rm --entrypoint /bootstrap.sh certbot
+#docker-compose up
+#docker-compose run --rm --entrypoint /bootstrap.sh certbot -rm
+#docker-compose run --rm --entrypoint /reqcert.sh certbot
+#docker-compose exec nginx nginx -s reload
