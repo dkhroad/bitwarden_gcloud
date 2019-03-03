@@ -8,7 +8,6 @@ else
   exit 1
 fi
 
-# gcloud compute project-info remove-metadata --keys=bitwarden_env,bitwarden_backup_gcs_env
 
 gcloud compute project-info add-metadata --metadata-from-file bitwarden_env=bitwarden.env
 gcloud compute project-info add-metadata --metadata-from-file docker-compose_env=docker-compose.env
