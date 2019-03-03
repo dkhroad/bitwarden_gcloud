@@ -1,11 +1,16 @@
 set -x
 INSTANCE_NAME=${1:-'bitwarden-test'}
 
-if [ -f ./gcloud.env ];
+if [ -f ./gcloud.env ]; then
   source ./gcloud.env
+else 
+  echo "./gcloud.env file is missing"
+  exit 1
 fi
+
 # gcloud compute project-info remove-metadata --keys=bitwarden_env,bitwarden_backup_gcs_env
 
+gcloud compute project-info add-metadata --metadata-from-file bitwarden_env=bitwarden.env
 gcloud compute project-info add-metadata --metadata-from-file docker-compose_env=docker-compose.env
 
 gcloud compute  instances create $INSTANCE_NAME \
