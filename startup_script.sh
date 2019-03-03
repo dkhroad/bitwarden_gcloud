@@ -18,19 +18,20 @@ curl http://metadata.google.internal/computeMetadata/v1/project/attributes/bitwa
 curl http://metadata.google.internal/computeMetadata/v1/project/attributes/docker-compose_env -H "Metadata-Flavor: Google" > /home/bitwarden/bitwarden_gcloud/.env
 curl http://metadata.google.internal/computeMetadata/v1/project/attributes/bitwarden_backup_gcs_env  -H "Metadata-Flavor: Google" > /home/bitwarden/bitwarden_gcloud/bitwarden_backup_gcs.env
 
+$docker_compose version
 source /home/bitwarden/.bashrc
 
-(cd /home/bitwarden/bitwarden_gcloud &&
-docker run --rm  \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v "$PWD:/rootfs/$PWD" \
-    -w="/rootfs/$PWD"  docker/compose:$DOCKER_COMPOSE_VERSION  run --rm backup_gcs /restore.sh)
+# (cd /home/bitwarden/bitwarden_gcloud &&
+# docker run --rm  \
+#     -v /var/run/docker.sock:/var/run/docker.sock \
+#     -v "$PWD:/rootfs/$PWD" \
+#     -w="/rootfs/$PWD"  docker/compose:$DOCKER_COMPOSE_VERSION  run --rm backup_gcs /restore.sh)
     
-(cd /home/bitwarden/bitwarden_gcloud &&
-docker run --rm  \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v "$PWD:/rootfs/$PWD" \
-    -w="/rootfs/$PWD"  docker/compose:$DOCKER_COMPOSE_VERSION up )
+# (cd /home/bitwarden/bitwarden_gcloud &&
+# docker run --rm  \
+#     -v /var/run/docker.sock:/var/run/docker.sock \
+#     -v "$PWD:/rootfs/$PWD" \
+#     -w="/rootfs/$PWD"  docker/compose:$DOCKER_COMPOSE_VERSION up )
 
 #docker-compose run --rm --entrypoint /bootstrap.sh certbot
 #docker-compose up
