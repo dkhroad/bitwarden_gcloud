@@ -27,9 +27,9 @@ curl http://metadata.google.internal/computeMetadata/v1/project/attributes/docke
 # bash -x ./backup.sh -r
 
 # start containers
-# bash -x ./certbot.sh -r
-# bash -x ./bitwarden.sh 
+# bash -x ./certbot.sh -req
 # bash -x ./certbot.sh 
+# bash -x ./bitwarden.sh 
 # bash -x ./backup.sh 
 # bash -x ./backup.sh -gcs
 
