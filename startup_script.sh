@@ -19,8 +19,6 @@ curl http://metadata.google.internal/computeMetadata/v1/project/attributes/bitwa
 curl http://metadata.google.internal/computeMetadata/v1/project/attributes/docker-compose_env -H "Metadata-Flavor: Google" > /home/bitwarden/bitwarden_gcloud/.env
 curl http://metadata.google.internal/computeMetadata/v1/project/attributes/docker_env -H "Metadata-Flavor: Google" > /home/bitwarden/bitwarden_gcloud/docker.env
 
-mkdir -p data/nginx
-cp app.conf.tmpl data/nginx
 
 # Assign the static IP to the instance if not already done
 
