@@ -27,3 +27,4 @@ gcloud compute  instances create $INSTANCE_NAME \
   --image-project=cos-cloud \
   --metadata=google-logging-enabled=true \
   --metadata-from-file startup-script=./startup_script.sh
+
