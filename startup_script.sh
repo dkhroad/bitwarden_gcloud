@@ -23,29 +23,15 @@ curl http://metadata.google.internal/computeMetadata/v1/project/attributes/docke
 # Assign the static IP to the instance if not already done
 
 
-# create a dummy cert if bringing up the containers for the first time
-#bash -x ./certbot.sh -b
-#(cd /home/bitwarden/bitwarden_gcloud; bash ../docker-compose run --rm --entrypoint /bootstrap.sh certbot)
-
 # restore bitwarden data
 # bash -x ./backup.sh -r
-#(cd /home/bitwarden/bitwarden_gcloud; bash ../docker-compose run --rm backup_gcs /restore.sh)
 
 # start containers
-# bash -x ./bitwarden.sh 
-# bash -x ./nginx.sh 
-# bash -x ./certbot.sh -c
 # bash -x ./certbot.sh -r
+# bash -x ./bitwarden.sh 
 # bash -x ./certbot.sh 
 # bash -x ./backup.sh 
 # bash -x ./backup.sh -gcs
 
-#(cd /home/bitwarden/bitwarden_gcloud; bash ../docker-compose up -d)
-# remove the fake cert now that nginx is up
-#(cd /home/bitwarden/bitwarden_gcloud; bash ../docker-compose run --rm --entrypoint /bootstrap.sh certbot -rm)
-# request a letsencrypt certificate with webroot plugin
-#(cd /home/biwarden/bitwarden_gloud; bash   ../docker-compose run --rm --entrypoint /reqcert.sh certbot)
-# reload nginx
-#(cd /home/bitwarden/bitwarden_gcloud; bash ../docker-compose exec nginx nginx -s reload)
 
 

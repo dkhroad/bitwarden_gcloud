@@ -11,6 +11,7 @@ fi
 
 gcloud compute project-info add-metadata --metadata-from-file bitwarden_env=bitwarden.env
 gcloud compute project-info add-metadata --metadata-from-file docker-compose_env=docker-compose.env
+gcloud compute project-info add-metadata --metadata-from-file docker_env=docker.env
 
 gcloud compute  instances create $INSTANCE_NAME \
   --project=$PROJECT \

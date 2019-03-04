@@ -19,11 +19,11 @@ elif [ "$1" == "-r" ]; then
   docker run --rm \
     -e CERTBOT_EMAIL=$CERTBOT_EMAIL \
     -e DOMAIN=$DOMAIN \
-    --volumes-from nginx \
+    --volumes-from bitwarden \
     --entrypoint /reqcert.sh \
     dkhroad/certbot 
 else 
-  docker run --restart=unless-stopped -name certbot\
+  docker run -d --restart=unless-stopped --name certbot\
     -e CERTBOT_EMAIL=$CERTBOT_EMAIL \
     -e DOMAIN=$DOMAIN \
     --volumes-from nginx \
