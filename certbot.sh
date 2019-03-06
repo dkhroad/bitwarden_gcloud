@@ -4,7 +4,8 @@ if [ "$1" == "-req" ]; then
   docker run --rm \
     -e CERTBOT_EMAIL=$CERTBOT_EMAIL \
     -e DOMAIN=$DOMAIN \
-    --volumes-from bitwarden \
+    -v $CERTBOT_DIR/conf:/etc/letsencrypt \
+    -v $CERTBOT_DIR/www:/var/www/certbot \
     --entrypoint /reqcert.sh \
     -p 80:80 \
     dkhroad/certbot standalone 
